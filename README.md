@@ -2,7 +2,7 @@
 
 ## Available Scripts
 
-In the project directory to setup :
+To setup Project in your Machine :
 
 ### `npm install`
 Installs React and missing Node Nodules
