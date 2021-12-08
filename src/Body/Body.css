@@ -4,6 +4,7 @@
   background-color: var(--body_background);
   flex-basis: 70%;
   justify-content: center;
+  align-items: flex-end;
 }
 
 .bars-container {
@@ -13,7 +14,7 @@
   position: relative;
   width: 600px;
   margin: auto;
-  top: 60vh;
+  bottom: 5vh;
   display: flex;
 }
 .bar {
