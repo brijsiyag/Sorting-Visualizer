@@ -31,6 +31,10 @@
   justify-content: center;
   color: black;
 }
+.bar:hover {
+  font-size: 3rem !important;
+  color: white;
+}
 .red {
   background-color: #ff0000;
 }

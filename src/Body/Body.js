@@ -23,14 +23,16 @@ function Body() {
                   className="bar"
                   style={{
                     width: 500 / size + "px",
-                    fontSize: 300 / size + "px",
+                    fontSize: `min(${300 / size}px, 2rem)`,
                     height: item.value * 4,
                     transform: `translate(${
                       (600 / size + 5) * index
                     }px, ${0}px)`,
                     transition: `transform ${speed / 1500}s ease`,
                   }}
-                ></div>
+                >
+                  {item.value}
+                </div>
               );
             })}
           </div>

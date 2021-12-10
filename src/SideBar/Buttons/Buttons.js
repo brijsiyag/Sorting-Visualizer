@@ -40,8 +40,8 @@ export default function SplitButton() {
   const handleClick = async () => {
     const sarr = [];
     // console.log(sarr, "SARR");
-    // selectedIndex === 0 && Insertion_sort(sarr, speed, setDisabled);
-    // selectedIndex === 1 && Bubble_sort(sarr, speed, setDisabled);
+    selectedIndex === 0 && Insertion_sort([...arr], speed, setDisabled);
+    selectedIndex === 1 && Bubble_sort([...arr], speed, setDisabled);
     selectedIndex === 3 && Merge_sort(getArr, speed, setDisabled);
     setDisabled(true);
   };
