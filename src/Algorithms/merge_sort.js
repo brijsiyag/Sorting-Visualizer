@@ -46,7 +46,6 @@ async function merge(arr, l, m, r, speed) {
   await new Promise((resolve) => {
     const innerInterval = setInterval(() => {
       if (k <= r) {
-        let first = document.querySelector(`#id${arr[k].id}`);
         let second = document.querySelector(`#id${strr[k - l].id}`);
         second.style.transform = `translate(${posArr[k - l]},-50vh)`;
         arr[k] = strr[k - l];

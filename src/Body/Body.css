@@ -35,9 +35,6 @@
   font-size: 3rem !important;
   color: white;
 }
-.red {
-  background-color: #ff0000;
-}
 
 .blue {
   background-color: blue;
@@ -45,6 +42,10 @@
 
 .green {
   background-color: green;
+}
+
+.red {
+  background-color: #ff0000;
 }
 
 .yellow {

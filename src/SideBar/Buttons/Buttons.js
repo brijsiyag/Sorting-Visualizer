@@ -9,7 +9,8 @@ import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Insertion_sort from "../../Algorithms/insertion_sort";
-import Bubble_sort from "../../Algorithms/Bubble_sort";
+import Bubble_sort from "../../Algorithms/bubble_sort";
+import Selection_sort from "../../Algorithms/selection_sort";
 import Merge_sort from "../../Algorithms/merge_sort";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsDisabled, arrGenerator } from "../../features/SortingSlice";
@@ -29,7 +30,7 @@ export default function SplitButton() {
   });
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(3);
+  const [selectedIndex, setSelectedIndex] = React.useState(2);
   const setDisabled = (val) => {
     dispatch(setIsDisabled(val));
   };
@@ -38,10 +39,9 @@ export default function SplitButton() {
     return await arr;
   };
   const handleClick = async () => {
-    const sarr = [];
-    // console.log(sarr, "SARR");
     selectedIndex === 0 && Insertion_sort([...arr], speed, setDisabled);
     selectedIndex === 1 && Bubble_sort([...arr], speed, setDisabled);
+    selectedIndex === 2 && Selection_sort([...arr], speed, setDisabled);
     selectedIndex === 3 && Merge_sort(getArr, speed, setDisabled);
     setDisabled(true);
   };
