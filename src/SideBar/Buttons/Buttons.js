@@ -18,6 +18,7 @@ import {
   setIsDisabled,
   arrGenerator,
   setArr,
+  setAlgo,
 } from "../../features/SortingSlice";
 import "./Buttons.css";
 const options = [
@@ -30,23 +31,21 @@ const options = [
 
 export default function SplitButton() {
   const dispatch = useDispatch();
-  const { arr, speed, isDisabled, pivot } = useSelector((state) => {
+  const { arr, speed, isDisabled, pivot, algo } = useSelector((state) => {
     return state.sortingVisualizer;
   });
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(4);
   const setDisabled = (val) => {
     dispatch(setIsDisabled(val));
   };
   const handleClick = async () => {
     setDisabled(true);
-    selectedIndex === 0 && (await Insertion_sort([...arr], speed, setDisabled));
-    selectedIndex === 1 && (await Bubble_sort([...arr], speed, setDisabled));
-    selectedIndex === 2 && (await Selection_sort([...arr], speed, setDisabled));
-    selectedIndex === 3 && (await Merge_sort([...arr], speed, setDisabled));
-    selectedIndex === 4 &&
-      (await Quick_sort([...arr], speed, setDisabled, pivot));
+    algo === 0 && (await Insertion_sort([...arr], speed, setDisabled));
+    algo === 1 && (await Bubble_sort([...arr], speed, setDisabled));
+    algo === 2 && (await Selection_sort([...arr], speed, setDisabled));
+    algo === 3 && (await Merge_sort([...arr], speed, setDisabled));
+    algo === 4 && (await Quick_sort([...arr], speed, setDisabled, pivot));
     let arrCopy = [...arr];
     let tempArr = [];
     arrCopy.forEach((element) => {
@@ -58,7 +57,7 @@ export default function SplitButton() {
   };
 
   const handleMenuItemClick = (event, index) => {
-    setSelectedIndex(index);
+    dispatch(setAlgo(index));
     setOpen(false);
   };
 
@@ -90,7 +89,7 @@ export default function SplitButton() {
             onClick={handleClick}
             disabled={isDisabled}
           >
-            {options[selectedIndex]}
+            {options[algo]}
           </Button>
           <Button
             color="success"
@@ -129,10 +128,9 @@ export default function SplitButton() {
                       <MenuItem
                         key={option}
                         style={{
-                          backgroundColor:
-                            index === selectedIndex ? "#2e7d32" : "",
+                          backgroundColor: index === algo ? "#2e7d32" : "",
                         }}
-                        selected={index === selectedIndex}
+                        selected={index === algo}
                         onClick={(event) => handleMenuItemClick(event, index)}
                       >
                         {option}

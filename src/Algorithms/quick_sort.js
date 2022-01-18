@@ -16,35 +16,60 @@ const addClass = (low, high, arr, className) => {
   }
 };
 
-const partition = async (arr, low, high, speed) => {
-  console.log(low, high);
+const delay = async (time) => {
+  return await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  });
+};
+
+const styleSwap = (id1, id2) => {
+  let first = elementSelect(id1);
+  let second = elementSelect(id2);
+  [first.style.transform, second.style.transform] = [
+    second.style.transform,
+    first.style.transform,
+  ];
+};
+
+const getPivot = (low, high, pivot) => {
+  if (pivot === 0) {
+    return low;
+  } else if (pivot === 1) {
+    return high;
+  } else if (pivot === 2) {
+    return Math.floor((low + high) / 2);
+  } else {
+    return Math.floor(Math.random() * (high - low + 1) + low);
+  }
+};
+
+const partition = async (arr, low, high, speed, pivot) => {
   return await new Promise(async (resolve, reject) => {
-    let pivot = arr[high].value;
-    elementSelect(arr[high].id)?.classList.add("red");
+    const pivot_index = getPivot(low, high, pivot);
+    elementSelect(arr[pivot_index].id)?.classList.add("red");
+    await delay(speed);
+    styleSwap(arr[pivot_index].id, arr[high].id);
+    [arr[pivot_index], arr[high]] = [arr[high], arr[pivot_index]];
+    let pivot_value = arr[high].value;
+    delay(speed);
     let i = low - 1,
       j = low;
     const innerInterval = setInterval(() => {
       if (j >= high) {
         if (j === high) {
-          let first = elementSelect(arr[i + 1].id);
-          let second = elementSelect(arr[high].id);
-          [first.style.transform, second.style.transform] = [
-            second.style.transform,
-            first.style.transform,
-          ];
+          styleSwap(arr[i + 1].id, arr[high].id);
           [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
         } else {
+          elementSelect(arr[i + 1].id).classList.add("yellow");
           resolve(i + 1);
           clearInterval(innerInterval);
         }
-      } else if (arr[j]?.value <= pivot) {
+      } else if (arr[j]?.value <= pivot_value) {
         i++;
-        let first = elementSelect(arr[i].id);
+        styleSwap(arr[i].id, arr[j].id);
         let second = elementSelect(arr[j].id);
-        [first.style.transform, second.style.transform] = [
-          second.style.transform,
-          first.style.transform,
-        ];
         second.classList.add("green");
         [arr[i], arr[j]] = [arr[j], arr[i]];
       }
@@ -55,31 +80,27 @@ const partition = async (arr, low, high, speed) => {
     }, speed);
   });
 };
-const qSort = async (arr, low, high, speed) => {
+const qSort = async (arr, low, high, speed, pivot) => {
   if (low < high) {
-    let pi = await partition(arr, low, high, speed);
-    elementSelect(arr[pi].id).classList.add("yellow");
+    await delay(speed);
+    addClass(low, high, arr, "blue");
+    let pi = await partition(arr, low, high, speed, pivot);
     removeClasses(["green", "red", "purple", "blue"]);
-    addClass(low, pi - 1, arr, "blue");
-    await qSort(arr, low, pi - 1, speed);
+    await qSort(arr, low, pi - 1, speed, pivot);
     removeClasses(["green", "red", "purple", "blue"]);
-    addClass(pi + 1, high, arr, "blue");
-    await qSort(arr, pi + 1, high, speed);
+    await qSort(arr, pi + 1, high, speed, pivot);
   } else {
     elementSelect(arr[low]?.id)?.classList.add("yellow");
     elementSelect(arr[high]?.id)?.classList.add("yellow");
   }
 };
 
-const Quick_sort = async (arr, speed, setIsDisabled) => {
+const Quick_sort = async (arr, speed, setIsDisabled, pivot) => {
+  console.log(pivot);
   console.log(arr);
-  addClass(0, arr.length - 1, arr, "blue");
-  await qSort(arr, 0, arr.length - 1, speed);
-  for (let i = 1; i <= arr.length; i++) {
-    elementSelect(i).classList.add("yellow");
-  }
+  await qSort(arr, 0, arr.length - 1, speed, pivot);
+  await delay(2 * speed);
   setIsDisabled(false);
-  console.log(arr);
 };
 
 export default Quick_sort;

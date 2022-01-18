@@ -7,7 +7,8 @@ export const counterSlice = createSlice({
     speed: 500,
     size: 15,
     isDisabled: false,
-    pivot: 0,
+    pivot: 3,
+    algo: 4,
   },
   reducers: {
     setSpeed: (state, action) => {
@@ -42,8 +43,8 @@ export const counterSlice = createSlice({
       }
       return {
         ...state,
-        arr: tempArr,
         size: action.payload.length,
+        arr: tempArr,
       };
     },
     setIsDisabled: (state, action) => {
@@ -81,6 +82,12 @@ export const counterSlice = createSlice({
         pivot: action.payload,
       };
     },
+    setAlgo: (state, action) => {
+      return {
+        ...state,
+        algo: action.payload,
+      };
+    },
   },
 });
 
@@ -92,6 +99,7 @@ export const {
   setIsDisabled,
   arrGenerator,
   setPivot,
+  setAlgo,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;

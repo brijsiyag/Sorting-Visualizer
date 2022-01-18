@@ -6,7 +6,7 @@ import QuickSortPivot from "./BodyParts/QuickSortPivot";
 import "./Body.css";
 function Body() {
   const dispatch = useDispatch();
-  const { size, arr, speed } = useSelector((state) => {
+  const { size, arr, speed, algo } = useSelector((state) => {
     return state.sortingVisualizer;
   });
   useEffect(() => {
@@ -16,7 +16,7 @@ function Body() {
     <>
       <div className="body-main-container">
         <div className="body-controller-container">
-          <QuickSortPivot />
+          {algo === 4 && <QuickSortPivot />}
         </div>
         <div className="bars-container">
           <div className="container red blue">

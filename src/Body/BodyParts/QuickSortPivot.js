@@ -7,18 +7,20 @@ import { useDispatch, useSelector } from "react-redux";
 import "./QuickSortPivot.css";
 const QuickSortPivot = () => {
   const dispatch = useDispatch();
-  const { pivot } = useSelector((state) => {
+  const { pivot, isDisabled } = useSelector((state) => {
     return state.sortingVisualizer;
   });
   return (
     <div className="quick-sort-pivot-body">
-      <h2>Pivot Element</h2>
-      <FormGroup>
+      <h2 className="quick-sort-pivot-heading">Pivot Element</h2>
+      <div>
         <div className="quick-sort-pivot-checkbox-container">
           <FormControlLabel
+            disabled={isDisabled}
             className="quick-sort-pivot-checkbox"
             control={
               <Checkbox
+                color="success"
                 checked={pivot === 0}
                 onClick={() => {
                   dispatch(setPivot(0));
@@ -31,6 +33,7 @@ const QuickSortPivot = () => {
             className="quick-sort-pivot-checkbox"
             control={
               <Checkbox
+                disabled={isDisabled}
                 checked={pivot === 1}
                 onClick={() => {
                   dispatch(setPivot(1));
@@ -42,6 +45,7 @@ const QuickSortPivot = () => {
         </div>
         <div className="quick-sort-pivot-checkbox-container">
           <FormControlLabel
+            disabled={isDisabled}
             className="quick-sort-pivot-checkbox"
             control={
               <Checkbox
@@ -54,6 +58,7 @@ const QuickSortPivot = () => {
             label="Middle"
           />
           <FormControlLabel
+            disabled={isDisabled}
             className="quick-sort-pivot-checkbox"
             control={
               <Checkbox
@@ -66,7 +71,7 @@ const QuickSortPivot = () => {
             label="Random"
           />
         </div>
-      </FormGroup>
+      </div>
     </div>
   );
 };
