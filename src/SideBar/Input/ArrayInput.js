@@ -20,8 +20,19 @@ const ArrayInput = () => {
     setinputArr(e.target.value);
   };
   const inputChangeBtnHandler = () => {
-    const tempArr = inputArr.slice(0, inputArr.length - 1).split(",");
-    dispatch(setSize(tempArr.length));
+    let tempArr = inputArr.slice(0, inputArr.length).split(",");
+    tempArr = tempArr.filter((element) => {
+      console.log(
+        element,
+        Number.isInteger(parseInt(element)),
+        parseInt(element)
+      );
+      return Number.isInteger(parseInt(element));
+    });
+    tempArr.map((element, index) => {
+      return (tempArr[index] = parseInt(element));
+    });
+    console.log(tempArr);
     dispatch(setArr(tempArr));
   };
   return (

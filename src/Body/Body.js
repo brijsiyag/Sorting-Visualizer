@@ -11,7 +11,7 @@ function Body() {
   });
   useEffect(() => {
     dispatch(arrGenerator());
-  }, [size]);
+  }, []);
   return (
     <>
       <div className="body-main-container">
