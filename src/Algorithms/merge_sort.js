@@ -1,3 +1,5 @@
+var running = true;
+
 async function merge(arr, l, m, r, speed) {
   //Remove green form all
   document.querySelectorAll(".green").forEach((element) => {
@@ -41,6 +43,10 @@ async function merge(arr, l, m, r, speed) {
   }
   await new Promise((resolve) => {
     const innerInterval = setInterval(() => {
+      if (!running) {
+        clearInterval(innerInterval);
+        resolve(true);
+      }
       if (k <= r) {
         let second = document.querySelector(`#id${strr[k - l].id}`);
         second.style.transform = `translate(${posArr[k - l]},-50vh)`;
@@ -63,27 +69,33 @@ async function merge(arr, l, m, r, speed) {
 }
 
 const merge_sort = async (arr, speed, setIsDisabled) => {
-  console.log(arr, "Extracted..");
-  // await merge(arr, 0, 2, 5, speed);
-  var recArr = [];
-  const mergeSort = async (l, r, speed) => {
-    if (l >= r) {
-      return;
+  return new Promise(async (resolve, reject) => {
+    document.querySelector(".stop-btn").addEventListener("click", () => {
+      running = false;
+    });
+    var recArr = [];
+    const mergeSort = async (l, r) => {
+      if (l >= r) {
+        return;
+      }
+      var m = l + parseInt((r - l) / 2);
+      await mergeSort(l, m);
+      await mergeSort(m + 1, r);
+      recArr.push([l, m, r]);
+    };
+    await mergeSort(0, arr.length - 1);
+    for (let i = 0; i < recArr.length; i++) {
+      const element = recArr[i];
+      await merge(arr, element[0], element[1], element[2], speed);
+      if (!running) {
+        resolve(true);
+        setIsDisabled(false);
+        running = true;
+        break;
+      }
     }
-    var m = l + parseInt((r - l) / 2);
-    await mergeSort(l, m, speed);
-    await mergeSort(m + 1, r, speed);
-    recArr.push([l, m, r]);
-  };
-  await mergeSort(0, arr.length - 1, speed);
-  for (let i = 0; i < recArr.length; i++) {
-    const element = recArr[i];
-    await merge(arr, element[0], element[1], element[2], speed);
-  }
-  document.querySelectorAll(".green").forEach((element) => {
-    element.classList.add("yellow");
+    setIsDisabled(false);
   });
-  setIsDisabled(false);
 };
 
 export default merge_sort;

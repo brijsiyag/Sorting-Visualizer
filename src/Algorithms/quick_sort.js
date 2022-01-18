@@ -1,3 +1,5 @@
+var running = true;
+
 const elementSelect = (id) => {
   return document.querySelector(`#id${id}`);
 };
@@ -57,6 +59,10 @@ const partition = async (arr, low, high, speed, pivot) => {
     let i = low - 1,
       j = low;
     const innerInterval = setInterval(() => {
+      if (!running) {
+        clearInterval(innerInterval);
+        resolve(0);
+      }
       if (j >= high) {
         if (j === high) {
           styleSwap(arr[i + 1].id, arr[high].id);
@@ -81,25 +87,27 @@ const partition = async (arr, low, high, speed, pivot) => {
   });
 };
 const qSort = async (arr, low, high, speed, pivot) => {
-  if (low < high) {
+  if (low < high && running) {
     await delay(speed);
     addClass(low, high, arr, "blue");
-    let pi = await partition(arr, low, high, speed, pivot);
+    let pi = running && (await partition(arr, low, high, speed, pivot));
     removeClasses(["green", "red", "purple", "blue"]);
-    await qSort(arr, low, pi - 1, speed, pivot);
+    running && (await qSort(arr, low, pi - 1, speed, pivot));
     removeClasses(["green", "red", "purple", "blue"]);
-    await qSort(arr, pi + 1, high, speed, pivot);
-  } else {
+    running && (await qSort(arr, pi + 1, high, speed, pivot));
+  } else if (running) {
     elementSelect(arr[low]?.id)?.classList.add("yellow");
     elementSelect(arr[high]?.id)?.classList.add("yellow");
   }
 };
 
 const Quick_sort = async (arr, speed, setIsDisabled, pivot) => {
-  console.log(pivot);
-  console.log(arr);
+  document.querySelector(".stop-btn").addEventListener("click", () => {
+    running = false;
+  });
   await qSort(arr, 0, arr.length - 1, speed, pivot);
-  await delay(2 * speed);
+  running && (await delay(2 * speed));
+  running = true;
   setIsDisabled(false);
 };
 
