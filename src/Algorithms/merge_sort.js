@@ -39,10 +39,6 @@ async function merge(arr, l, m, r, speed) {
     var matches = regExp.exec(first.style.transform);
     posArr.push(matches[0].slice(1, matches[0].length - 1).split(",")[0]);
   }
-  console.log("L", L);
-  console.log("R", R);
-  console.log("strr", strr);
-  console.log(posArr, "POS ARR");
   await new Promise((resolve) => {
     const innerInterval = setInterval(() => {
       if (k <= r) {
@@ -63,28 +59,23 @@ async function merge(arr, l, m, r, speed) {
         resolve(true);
       }
     }, speed);
-    console.log("Innner done...");
   });
 }
 
-const merge_sort = async (getArr, speed, setIsDisabled) => {
-  var getArrVals = await getArr();
-  var arr = [...getArrVals];
+const merge_sort = async (arr, speed, setIsDisabled) => {
   console.log(arr, "Extracted..");
   // await merge(arr, 0, 2, 5, speed);
   var recArr = [];
-  const mergeSort = async (arr, l, r, speed) => {
+  const mergeSort = async (l, r, speed) => {
     if (l >= r) {
-      console.log("Returned....");
       return;
     }
     var m = l + parseInt((r - l) / 2);
-    await mergeSort(arr, l, m, speed);
-    await mergeSort(arr, m + 1, r, speed);
+    await mergeSort(l, m, speed);
+    await mergeSort(m + 1, r, speed);
     recArr.push([l, m, r]);
   };
-  await mergeSort(arr, 0, arr.length - 1, speed);
-  console.log(recArr);
+  await mergeSort(0, arr.length - 1, speed);
   for (let i = 0; i < recArr.length; i++) {
     const element = recArr[i];
     await merge(arr, element[0], element[1], element[2], speed);
@@ -93,26 +84,6 @@ const merge_sort = async (getArr, speed, setIsDisabled) => {
     element.classList.add("yellow");
   });
   setIsDisabled(false);
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  //   let curRec = 0;
-  //   const intervalProp = setIntervalAsync(async () => {
-  //     await new Promise(async (resolve) => {
-  //       console.log(curRec, recursionOrder.length);
-  //       if (curRec === recursionOrder.length) {
-  //         clearInterval(intervalProp);
-  //         setIsDisabled(false);
-  //       } else {
-  //         console.log("Fifth Step");
-  //         await merge(
-  //           recursionOrder[curRec][0],
-  //           recursionOrder[curRec][1],
-  //           recursionOrder[curRec][2]
-  //         );
-  //         console.log("Bottom of the await");
-  //         resolve(curRec++);
-  //       }
-  //     });
-  //   }, 100);
 };
 
 export default merge_sort;

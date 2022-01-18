@@ -7,6 +7,7 @@ export const counterSlice = createSlice({
     speed: 500,
     size: 15,
     isDisabled: false,
+    pivot: 0,
   },
   reducers: {
     setSpeed: (state, action) => {
@@ -36,6 +37,7 @@ export const counterSlice = createSlice({
           element.classList.remove("green");
           element.classList.remove("yellow");
           element.classList.remove("red");
+          element.classList.remove("blue");
         }
       }
       return {
@@ -65,6 +67,7 @@ export const counterSlice = createSlice({
           element.classList.remove("green");
           element.classList.remove("yellow");
           element.classList.remove("red");
+          element.classList.remove("blue");
         }
       }
       return {
@@ -72,11 +75,23 @@ export const counterSlice = createSlice({
         arr: tempArr,
       };
     },
+    setPivot: (state, action) => {
+      return {
+        ...state,
+        pivot: action.payload,
+      };
+    },
   },
 });
 
-// Action creators are generated for eac\h case reducer function
-export const { setSpeed, setSize, setArr, setIsDisabled, arrGenerator } =
-  counterSlice.actions;
+// Action creators are generated for each case reducer function
+export const {
+  setSpeed,
+  setSize,
+  setArr,
+  setIsDisabled,
+  arrGenerator,
+  setPivot,
+} = counterSlice.actions;
 
 export default counterSlice.reducer;

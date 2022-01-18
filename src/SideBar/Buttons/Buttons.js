@@ -12,8 +12,13 @@ import Insertion_sort from "../../Algorithms/insertion_sort";
 import Bubble_sort from "../../Algorithms/bubble_sort";
 import Selection_sort from "../../Algorithms/selection_sort";
 import Merge_sort from "../../Algorithms/merge_sort";
+import Quick_sort from "../../Algorithms/quick_sort";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsDisabled, arrGenerator } from "../../features/SortingSlice";
+import {
+  setIsDisabled,
+  arrGenerator,
+  setArr,
+} from "../../features/SortingSlice";
 import "./Buttons.css";
 const options = [
   "Insertion Sort",
@@ -25,25 +30,31 @@ const options = [
 
 export default function SplitButton() {
   const dispatch = useDispatch();
-  const { arr, speed, isDisabled } = useSelector((state) => {
+  const { arr, speed, isDisabled, pivot } = useSelector((state) => {
     return state.sortingVisualizer;
   });
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(2);
+  const [selectedIndex, setSelectedIndex] = React.useState(4);
   const setDisabled = (val) => {
     dispatch(setIsDisabled(val));
   };
-
-  const getArr = async () => {
-    return await arr;
-  };
   const handleClick = async () => {
-    selectedIndex === 0 && Insertion_sort([...arr], speed, setDisabled);
-    selectedIndex === 1 && Bubble_sort([...arr], speed, setDisabled);
-    selectedIndex === 2 && Selection_sort([...arr], speed, setDisabled);
-    selectedIndex === 3 && Merge_sort(getArr, speed, setDisabled);
     setDisabled(true);
+    selectedIndex === 0 && (await Insertion_sort([...arr], speed, setDisabled));
+    selectedIndex === 1 && (await Bubble_sort([...arr], speed, setDisabled));
+    selectedIndex === 2 && (await Selection_sort([...arr], speed, setDisabled));
+    selectedIndex === 3 && (await Merge_sort([...arr], speed, setDisabled));
+    selectedIndex === 4 &&
+      (await Quick_sort([...arr], speed, setDisabled, pivot));
+    let arrCopy = [...arr];
+    let tempArr = [];
+    arrCopy.forEach((element) => {
+      tempArr.push(element.value);
+    });
+    tempArr.sort();
+    console.log(tempArr);
+    dispatch(setArr(tempArr));
   };
 
   const handleMenuItemClick = (event, index) => {
@@ -72,7 +83,10 @@ export default function SplitButton() {
           aria-label="split button"
         >
           <Button
-            style={{ color: isDisabled ? "white" : "black" }}
+            style={{
+              color: isDisabled ? "white" : "black",
+              border: isDisabled && "1px solid white",
+            }}
             onClick={handleClick}
             disabled={isDisabled}
           >
@@ -85,6 +99,7 @@ export default function SplitButton() {
             aria-expanded={open ? "true" : undefined}
             aria-label="select merge strategy"
             aria-haspopup="menu"
+            style={{ color: "white", border: isDisabled && "1px solid white" }}
             onClick={handleToggle}
             disabled={isDisabled}
           >
@@ -136,10 +151,19 @@ export default function SplitButton() {
             dispatch(arrGenerator());
           }}
           disabled={isDisabled}
+          style={{ color: "white", border: isDisabled && "1px solid white" }}
           color="primary"
           variant="contained"
         >
           Generate New Array
+        </Button>
+        <Button
+          style={{ color: "white" }}
+          color="primary"
+          variant="contained"
+          className="stop-btn"
+        >
+          Stop
         </Button>
       </div>
     </>

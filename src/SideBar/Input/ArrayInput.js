@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import "./ArrayInput.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setArr } from "../../features/SortingSlice";
+import { setArr, setSize } from "../../features/SortingSlice";
 const ArrayInput = () => {
   const dispatch = useDispatch();
   let { arr, isDisabled } = useSelector((state) => {
@@ -11,7 +11,7 @@ const ArrayInput = () => {
   const [inputArr, setinputArr] = useState("");
   useEffect(() => {
     let tempIntputArr = "";
-    arr.map((element) => {
+    arr.forEach((element) => {
       tempIntputArr += `${element.value},`;
     });
     setinputArr(tempIntputArr);
@@ -21,7 +21,7 @@ const ArrayInput = () => {
   };
   const inputChangeBtnHandler = () => {
     const tempArr = inputArr.slice(0, inputArr.length - 1).split(",");
-    console.log(tempArr, "LSDKFJLKDSJFL");
+    dispatch(setSize(tempArr.length));
     dispatch(setArr(tempArr));
   };
   return (
@@ -39,6 +39,7 @@ const ArrayInput = () => {
       />
       <Button
         disabled={isDisabled}
+        style={{ color: "white", border: isDisabled && "1px solid white" }}
         onClick={inputChangeBtnHandler}
         className="input-array-btn"
         variant="contained"

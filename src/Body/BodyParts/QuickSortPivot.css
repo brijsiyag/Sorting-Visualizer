@@ -1,0 +1,16 @@
+.quick-sort-pivot-body {
+  background-color: rgba(0, 119, 99, 0.459);
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.quick-sort-pivot-checkbox-container {
+  display: grid;
+  text-align: left;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr 1fr;
+}
+
+.quick-sort-pivot-checkbox {
+  text-align: left;
+}

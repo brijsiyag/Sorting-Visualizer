@@ -3,12 +3,14 @@ const removeClass = (className) => {
     element.classList.remove(className);
   });
 };
-
-const Insertion_sort = async (arr, speed, setIsDisabled) => {
+const SelectionSort = async (arr, speed, setIsDisabled) => {
+  let shouldReturn = false;
+  document.querySelector(".stop-btn").addEventListener("click", () => {
+    shouldReturn = true;
+    console.log("Called.....");
+  });
   const n = arr.length;
-
-  for (let i = 0; i < n; i++) {
-    console.log("In Interval");
+  for (let i = 0; i < n && !shouldReturn; i++) {
     let min_idx = i;
     removeClass("red");
     document.getElementById(`id${arr[min_idx].id}`).classList.add("red");
@@ -48,4 +50,4 @@ const Insertion_sort = async (arr, speed, setIsDisabled) => {
   setIsDisabled(false);
 };
 
-export default Insertion_sort;
+export default SelectionSort;
