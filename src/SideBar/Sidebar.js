@@ -27,6 +27,11 @@ const Sidebar = () => {
             view repo
           </a>
         </div>
+        <img
+          className="sidebar-visitor-badge"
+          src="https://visitor-badge.glitch.me/badge?page_id=brijsiyag.sorting_visualizer"
+          alt="visitor-badge"
+        />
       </div>
     </div>
   );

@@ -2,9 +2,11 @@ import "./App.css";
 import Body from "./Body/Body";
 import Sidebar from "./SideBar/Sidebar";
 import Header from "./Header/Header";
+import { Notification } from "./Notification";
 function App() {
   return (
     <div className="main-container">
+      <Notification />
       <div>
         <Header />
       </div>

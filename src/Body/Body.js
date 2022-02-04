@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { arrGenerator } from "../features/SortingSlice";
 import QuickSortPivot from "./BodyParts/QuickSortPivot";
+import Modal from "../ModalHandler/Modal";
+import AboutAlgo from "./BodyParts/AboutAlgo/AboutAlgo";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import "./Body.css";
+import { Button } from "@mui/material";
+
+const aboutAlgoStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "60vw",
+  height: "fit-content",
+  maxHeight: "80vh",
+  overflow: "auto",
+  bgcolor: "#222831",
+  border: "1px solid gray",
+  boxShadow: "white 0 0 5px 0.5px",
+  p: 4,
+  borderRadius: "5px",
+};
+
 function Body() {
   const dispatch = useDispatch();
+  const [aboutAlgoOpen, setAboutAlgoOpen] = React.useState(false);
   const { size, arr, speed, algo } = useSelector((state) => {
     return state.sortingVisualizer;
   });
@@ -14,9 +36,26 @@ function Body() {
   }, []);
   return (
     <>
+      <Modal
+        isOpen={aboutAlgoOpen}
+        setIsOpen={setAboutAlgoOpen}
+        data={{ algo: algo, style: aboutAlgoStyle }}
+        Component={AboutAlgo}
+      />
       <div className="body-main-container">
         <div className="body-controller-container">
           {algo === 4 && <QuickSortPivot />}
+        </div>
+        <div className="about-algo-button">
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setAboutAlgoOpen(!aboutAlgoOpen);
+            }}
+            sx={{ padding: "0", width: "fit-content" }}
+          >
+            <InfoOutlinedIcon fontSize="large" color="info" />
+          </Button>
         </div>
         <div className="bars-container">
           <div className="container red blue">

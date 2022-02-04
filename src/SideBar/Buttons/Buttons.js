@@ -74,7 +74,7 @@ export default function SplitButton() {
 
   return (
     <>
-      <div>
+      <div style={{ textAlign: "center" }}>
         <ButtonGroup
           color="success"
           variant="contained"
@@ -156,7 +156,7 @@ export default function SplitButton() {
           Generate New Array
         </Button>
         <Button
-          style={{ color: "white" }}
+          style={{ color: "white", marginLeft: "10px" }}
           onClick={() => {
             console.log("Clicked....");
           }}

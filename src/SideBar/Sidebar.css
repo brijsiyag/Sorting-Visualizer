@@ -23,3 +23,8 @@
   margin: 10px auto;
   align-items: center;
 }
+
+.sidebar-visitor-badge {
+  width: 80px;
+  margin: 0 auto 5px;
+}

@@ -31,7 +31,7 @@ export const counterSlice = createSlice({
       const tempArr = [];
       for (let i = 0; i < action.payload.length; i++) {
         tempArr.push({
-          value: action.payload[i],
+          value: action.payload[i] % 70,
           id: i + 1,
         });
         let element = document.querySelector(`#id${i + 1}`);
