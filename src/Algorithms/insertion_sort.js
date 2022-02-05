@@ -5,7 +5,6 @@ const insertion_sort = async (arr, speed, setIsDisabled) => {
     document.querySelector(".stop-btn").addEventListener("click", () => {
       running = false;
     });
-    console.log(arr);
     let i = 1,
       j = 0;
     document.querySelector(`#id2`).classList.add("green");
@@ -37,7 +36,6 @@ const insertion_sort = async (arr, speed, setIsDisabled) => {
         j = i - 1;
         document.querySelector(`#id${i + 1}`).classList.add("green");
       }
-      console.log(arr);
     }, speed);
   });
 };

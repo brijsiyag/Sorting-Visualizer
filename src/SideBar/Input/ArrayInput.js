@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import "./ArrayInput.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setArr, setSize } from "../../features/SortingSlice";
+import { setArr } from "../../features/SortingSlice";
+
 const ArrayInput = () => {
   const dispatch = useDispatch();
   let { arr, isDisabled } = useSelector((state) => {
@@ -22,17 +23,24 @@ const ArrayInput = () => {
   const inputChangeBtnHandler = () => {
     let tempArr = inputArr.slice(0, inputArr.length).split(",");
     tempArr = tempArr.filter((element) => {
-      console.log(
-        element,
-        Number.isInteger(parseInt(element)),
-        parseInt(element)
-      );
       return Number.isInteger(parseInt(element));
     });
+    //79 is Max Height of a bar in Redux SortingSlice Array Generator
     tempArr.map((element, index) => {
-      return (tempArr[index] = parseInt(element));
+      return (tempArr[index] = parseInt(element) > 79 ? 79 : parseInt(element));
     });
-    console.log(tempArr);
+    dispatch(setArr(tempArr));
+  };
+  const shuffleArray = () => {
+    const tempArr = [...arr];
+    tempArr.map((element, index) => {
+      return (tempArr[index] = element.value);
+    });
+    for (var i = tempArr.length - 1; i > 0; i--) {
+      // Generate random number
+      var j = Math.floor(Math.random() * (i + 1));
+      [tempArr[i], tempArr[j]] = [tempArr[j], tempArr[i]];
+    }
     dispatch(setArr(tempArr));
   };
   return (
@@ -57,6 +65,16 @@ const ArrayInput = () => {
         color="primary"
       >
         Generate
+      </Button>
+      <Button
+        disabled={isDisabled}
+        style={{ color: "white", border: isDisabled && "1px solid white" }}
+        onClick={shuffleArray}
+        className="shuffle-array-btn"
+        variant="contained"
+        color="info"
+      >
+        Shuffle
       </Button>
     </div>
   );

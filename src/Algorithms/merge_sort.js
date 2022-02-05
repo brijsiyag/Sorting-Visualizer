@@ -1,4 +1,11 @@
 var running = true;
+const removeClasses = (classNames) => {
+  classNames.forEach((className) => {
+    document.querySelectorAll(`.${className}`).forEach((element) => {
+      element.classList.remove(className);
+    });
+  });
+};
 
 async function merge(arr, l, m, r, speed) {
   //Remove green form all
@@ -89,12 +96,15 @@ const merge_sort = async (arr, speed, setIsDisabled) => {
       await merge(arr, element[0], element[1], element[2], speed);
       if (!running) {
         resolve(true);
+        removeClasses(["green", "red", "purple", "blue"]);
         setIsDisabled(false);
         running = true;
         break;
       }
     }
+    removeClasses(["green", "red", "purple", "blue"]);
     setIsDisabled(false);
+    resolve(true);
   });
 };
 

@@ -49,7 +49,6 @@ const SelectionSort = async (arr, speed, setIsDisabled) => {
   const sortCall = async (arr, speed, i, n) => {
     if (i < n) {
       running && (await sort(arr, speed, i, n));
-      console.log(arr);
       running && (await sortCall(arr, speed, i + 1, n));
     }
   };

@@ -17,6 +17,10 @@
   max-width: 90%;
 }
 .input-array-btn {
+  margin: 5px 10px !important;
+}
+
+.shuffle-array-btn {
   margin: 5px auto !important;
 }
 .array-input-label {

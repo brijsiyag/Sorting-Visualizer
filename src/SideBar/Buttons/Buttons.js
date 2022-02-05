@@ -46,13 +46,11 @@ export default function SplitButton() {
     algo === 2 && (await Selection_sort([...arr], speed, setDisabled));
     algo === 3 && (await Merge_sort([...arr], speed, setDisabled));
     algo === 4 && (await Quick_sort([...arr], speed, setDisabled, pivot));
-    let arrCopy = [...arr];
     let tempArr = [];
-    arrCopy.forEach((element) => {
+    arr.forEach((element) => {
       tempArr.push(element.value);
     });
     tempArr.sort();
-    console.log(tempArr);
     dispatch(setArr(tempArr));
   };
 
@@ -158,7 +156,7 @@ export default function SplitButton() {
         <Button
           style={{ color: "white", marginLeft: "10px" }}
           onClick={() => {
-            console.log("Clicked....");
+            console.log("Stop Button Clicked....");
           }}
           color="primary"
           variant="contained"
