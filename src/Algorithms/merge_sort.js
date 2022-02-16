@@ -9,6 +9,14 @@ const removeClasses = (classNames) => {
   });
 };
 
+const delay = async (time) => {
+  return await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  });
+};
+
 async function merge(arr, l, m, r, speed) {
   //Remove green form all
   document.querySelectorAll(".green").forEach((element) => {
@@ -50,6 +58,7 @@ async function merge(arr, l, m, r, speed) {
     var matches = regExp.exec(first.style.transform);
     posArr.push(matches[0].slice(1, matches[0].length - 1).split(",")[0]);
   }
+  await delay(store.getState().sortingVisualizer.speed);
   await new Promise(async (resolve) => {
     await SetInterval((clearMyInterval) => {
       if (!running) {
