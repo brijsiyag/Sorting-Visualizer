@@ -23,7 +23,7 @@ export default function SliderSizes() {
           min={100}
           aria-label="large"
           valueLabelDisplay="auto"
-          disabled={isDisabled}
+          // disabled={isDisabled}
           value={1500 - speed}
           onChange={(e) => {
             dispatch(setSpeed(1501 - e.target.value));
