@@ -1,3 +1,5 @@
+import store from "../app/store";
+import SetInterval from "./SetInterval";
 var running = true;
 const removeClasses = (classNames) => {
   classNames.forEach((className) => {
@@ -48,11 +50,11 @@ async function merge(arr, l, m, r, speed) {
     var matches = regExp.exec(first.style.transform);
     posArr.push(matches[0].slice(1, matches[0].length - 1).split(",")[0]);
   }
-  await new Promise((resolve) => {
-    const innerInterval = setInterval(() => {
+  await new Promise(async (resolve) => {
+    await SetInterval((clearMyInterval) => {
       if (!running) {
-        clearInterval(innerInterval);
         resolve(true);
+        clearMyInterval();
       }
       if (k <= r) {
         let second = document.querySelector(`#id${strr[k - l].id}`);
@@ -60,7 +62,6 @@ async function merge(arr, l, m, r, speed) {
         arr[k] = strr[k - l];
         k++;
       } else {
-        clearInterval(innerInterval);
         for (let i = l; i <= r; i++) {
           let first = document.querySelector(`#id${arr[i].id}`);
           var regExp = /\(([^)]+)\)/;
@@ -70,8 +71,9 @@ async function merge(arr, l, m, r, speed) {
           },0px)`;
         }
         resolve(true);
+        clearMyInterval();
       }
-    }, speed);
+    });
   });
 }
 
@@ -93,7 +95,13 @@ const merge_sort = async (arr, speed, setIsDisabled) => {
     await mergeSort(0, arr.length - 1);
     for (let i = 0; i < recArr.length; i++) {
       const element = recArr[i];
-      await merge(arr, element[0], element[1], element[2], speed);
+      await merge(
+        arr,
+        element[0],
+        element[1],
+        element[2],
+        store.getState().speed
+      );
       if (!running) {
         resolve(true);
         removeClasses(["green", "red", "purple", "blue"]);

@@ -1,19 +1,20 @@
+import SetInterval from "./SetInterval";
 var running = true;
-
-const Insertion_sort = async (arr, speed, setIsDisabled) => {
-  return await new Promise((resolve, reject) => {
+const BubbleSort = async (arr, speed, setIsDisabled) => {
+  return await new Promise(async (resolve, reject) => {
     document.querySelector(".stop-btn").addEventListener("click", () => {
       running = false;
     });
     var i = 0,
       j = 0,
       flag = true;
-    const intervalProp = setInterval(() => {
+    SetInterval((clearMyInterval) => {
       if (!running) {
-        clearInterval(intervalProp);
-        resolve(true);
         setIsDisabled(false);
         running = true;
+        clearMyInterval();
+        resolve(true);
+        return;
       }
       if (flag) {
         document.querySelectorAll(".green").forEach((element) => {
@@ -40,8 +41,9 @@ const Insertion_sort = async (arr, speed, setIsDisabled) => {
         }
       } else if (i >= arr.length) {
         resolve(true);
-        clearInterval(intervalProp);
         setIsDisabled(false);
+        clearMyInterval();
+        return;
       } else {
         document.querySelectorAll(".green").forEach((element) => {
           element.classList.remove("green");
@@ -53,8 +55,8 @@ const Insertion_sort = async (arr, speed, setIsDisabled) => {
         j = 0;
         flag = true;
       }
-    }, speed);
+    });
   });
 };
 
-export default Insertion_sort;
+export default BubbleSort;

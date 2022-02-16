@@ -1,5 +1,5 @@
+import SetInterval from "./SetInterval";
 var running = true;
-
 const insertion_sort = async (arr, speed, setIsDisabled) => {
   return await new Promise((resolve, reject) => {
     document.querySelector(".stop-btn").addEventListener("click", () => {
@@ -8,9 +8,9 @@ const insertion_sort = async (arr, speed, setIsDisabled) => {
     let i = 1,
       j = 0;
     document.querySelector(`#id2`).classList.add("green");
-    const intervalProp = setInterval(() => {
+    SetInterval((clearMyInterval) => {
       if (!running) {
-        clearInterval(intervalProp);
+        clearMyInterval();
         resolve(true);
         setIsDisabled(false);
         running = true;
@@ -26,7 +26,7 @@ const insertion_sort = async (arr, speed, setIsDisabled) => {
         j--;
       } else if (i >= arr.length - 1) {
         resolve(true);
-        clearInterval(intervalProp);
+        clearMyInterval();
         setIsDisabled(false);
       } else {
         document.querySelectorAll(".green").forEach((element) => {
@@ -36,7 +36,7 @@ const insertion_sort = async (arr, speed, setIsDisabled) => {
         j = i - 1;
         document.querySelector(`#id${i + 1}`).classList.add("green");
       }
-    }, speed);
+    });
   });
 };
 

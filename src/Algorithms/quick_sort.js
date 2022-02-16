@@ -1,3 +1,6 @@
+import store from "../app/store";
+import SetInterval from "./SetInterval";
+// clearMyInterval
 var running = true;
 
 const elementSelect = (id) => {
@@ -51,16 +54,16 @@ const partition = async (arr, low, high, speed, pivot) => {
   return await new Promise(async (resolve, reject) => {
     const pivot_index = getPivot(low, high, pivot);
     elementSelect(arr[pivot_index].id)?.classList.add("red");
-    await delay(speed);
+    await delay(store.getState().speed);
     styleSwap(arr[pivot_index].id, arr[high].id);
     [arr[pivot_index], arr[high]] = [arr[high], arr[pivot_index]];
     let pivot_value = arr[high].value;
-    delay(speed);
+    delay(store.getState().speed);
     let i = low - 1,
       j = low;
-    const innerInterval = setInterval(() => {
+    SetInterval((clearMyInterval) => {
       if (!running) {
-        clearInterval(innerInterval);
+        clearMyInterval();
         resolve(0);
       }
       if (j >= high) {
@@ -70,7 +73,7 @@ const partition = async (arr, low, high, speed, pivot) => {
         } else {
           elementSelect(arr[i + 1].id).classList.add("yellow");
           resolve(i + 1);
-          clearInterval(innerInterval);
+          clearMyInterval();
         }
       } else if (arr[j]?.value <= pivot_value) {
         i++;
@@ -83,12 +86,12 @@ const partition = async (arr, low, high, speed, pivot) => {
         elementSelect(arr[j]?.id)?.classList.add("purple");
       }
       j++;
-    }, speed);
+    });
   });
 };
 const qSort = async (arr, low, high, speed, pivot) => {
   if (low < high && running) {
-    await delay(speed);
+    await delay(store.getState().speed);
     addClass(low, high, arr, "blue");
     let pi = running && (await partition(arr, low, high, speed, pivot));
     removeClasses(["green", "red", "purple", "blue"]);
@@ -105,8 +108,8 @@ const Quick_sort = async (arr, speed, setIsDisabled, pivot) => {
   document.querySelector(".stop-btn").addEventListener("click", () => {
     running = false;
   });
-  await qSort(arr, 0, arr.length - 1, speed, pivot);
-  running && (await delay(2 * speed));
+  await qSort(arr, 0, arr.length - 1, store.getState().speed, pivot);
+  running && (await delay(2 * store.getState().speed));
   running = true;
   setIsDisabled(false);
 };
