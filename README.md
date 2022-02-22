@@ -1,6 +1,9 @@
 # Sorting Visualizzer
 
+[Deployed Link](https://sorting-visualizzer.netlify.app/)
+
 ## Available Scripts
+
 
 In the project directory, you can run:
 
@@ -19,3 +22,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
+
+https://user-images.githubusercontent.com/71015892/155099200-5ca1fb3d-04f1-490f-9801-41e4b0f30c45.mp4
+
