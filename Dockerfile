@@ -2,10 +2,10 @@ FROM node:16.13.1-alpine3.14
 # RUN addgroup app && adduser -S -G app app
 # USER app
 WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
 COPY package*.json .
 RUN npm install
 COPY . .
-ENV API_URL=http://localhost:5000/
 EXPOSE 3000
 #shell cmd
 # CMD npm start
