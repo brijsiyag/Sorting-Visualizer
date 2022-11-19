@@ -1,5 +1,5 @@
-import store from "../app/store";
 import SetInterval from "./SetInterval";
+
 var running = true;
 const removeClass = (className) => {
   document.querySelectorAll(`.${className}`).forEach((element) => {
@@ -7,7 +7,7 @@ const removeClass = (className) => {
   });
 };
 
-const sort = async (arr, speed, i, n) => {
+const sort = async (arr, i, n) => {
   return await new Promise((resolve) => {
     document.querySelector(".stop-btn").addEventListener("click", () => {
       running = false;
@@ -43,19 +43,19 @@ const sort = async (arr, speed, i, n) => {
         document.querySelector(`#id${arr[i].id}`).classList.add("yellow");
         resolve(true);
       }
-    }, store.getState().speed);
+    });
   });
 };
 
-const SelectionSort = async (arr, speed, setIsDisabled) => {
-  const sortCall = async (arr, speed, i, n) => {
+const SelectionSort = async (arr, setIsDisabled) => {
+  const sortCall = async (arr, i, n) => {
     if (i < n) {
-      running && (await sort(arr, store.getState().speed, i, n));
-      running && (await sortCall(arr, store.getState().speed, i + 1, n));
+      running && (await sort(arr, i, n));
+      running && (await sortCall(arr, i + 1, n));
     }
   };
   const n = arr.length;
-  await sortCall(arr, store.getState().speed, 0, n);
+  await sortCall(arr, 0, n);
   running = true;
   setIsDisabled(false);
 };

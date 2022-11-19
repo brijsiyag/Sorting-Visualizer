@@ -39,10 +39,9 @@ export const counterSlice = createSlice({
           element.style.transform = `translate(${
             (600 / action.payload.length + 5) * i
           }px, ${0}px)`;
-          element.classList.remove("green");
-          element.classList.remove("yellow");
-          element.classList.remove("red");
-          element.classList.remove("blue");
+          ["green", "yellow", "red", "blue"].forEach((elet) => {
+            element.classList.remove(elet);
+          });
         }
       }
       return {

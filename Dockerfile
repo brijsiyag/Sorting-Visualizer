@@ -1,15 +1,20 @@
+# Nodejs Image
 FROM node:16.13.1-alpine3.14
-# RUN addgroup app && adduser -S -G app app
-# USER app
+
+# Set Working directory of app
 WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
+
+# Copy package.json and package-lock.json to avoid reinstalling packages
 COPY package*.json .
+
+# Install packages
 RUN npm install
+
+# Copy source code
 COPY . .
+
+# Expose port to run app on host machine
 EXPOSE 3000
-#shell cmd
-# CMD npm start
-#exec cmd --should use this,faster
+
+# Start app
 CMD ["npm","start"]
-#Entry Point(to avoid overwritting of caommands during running app on docker...)
-# ENTRYPOINT ["npm","start"]

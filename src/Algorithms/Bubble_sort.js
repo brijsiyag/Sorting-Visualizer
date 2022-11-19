@@ -1,7 +1,7 @@
 import SetInterval from "./SetInterval";
 var running = true;
-const BubbleSort = async (arr, speed, setIsDisabled) => {
-  return await new Promise(async (resolve, reject) => {
+const BubbleSort = async (arr, setIsDisabled) => {
+  return await new Promise(async (resolve) => {
     document.querySelector(".stop-btn").addEventListener("click", () => {
       running = false;
     });

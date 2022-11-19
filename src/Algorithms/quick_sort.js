@@ -1,6 +1,5 @@
 import store from "../app/store";
 import SetInterval from "./SetInterval";
-// clearMyInterval
 var running = true;
 
 const elementSelect = (id) => {
@@ -50,15 +49,15 @@ const getPivot = (low, high, pivot) => {
   }
 };
 
-const partition = async (arr, low, high, speed, pivot) => {
+const partition = async (arr, low, high, pivot) => {
   return await new Promise(async (resolve, reject) => {
     const pivot_index = getPivot(low, high, pivot);
     elementSelect(arr[pivot_index].id)?.classList.add("red");
-    await delay(store.getState().speed);
+    await delay(store.getState().sortingVisualizer.speed);
     styleSwap(arr[pivot_index].id, arr[high].id);
     [arr[pivot_index], arr[high]] = [arr[high], arr[pivot_index]];
     let pivot_value = arr[high].value;
-    delay(store.getState().speed);
+    await delay(store.getState().sortingVisualizer.speed);
     let i = low - 1,
       j = low;
     SetInterval((clearMyInterval) => {
@@ -89,27 +88,27 @@ const partition = async (arr, low, high, speed, pivot) => {
     });
   });
 };
-const qSort = async (arr, low, high, speed, pivot) => {
+const qSort = async (arr, low, high, pivot) => {
   if (low < high && running) {
-    await delay(store.getState().speed);
+    await delay(store.getState().sortingVisualizer.speed);
     addClass(low, high, arr, "blue");
-    let pi = running && (await partition(arr, low, high, speed, pivot));
+    let pi = running && (await partition(arr, low, high, pivot));
     removeClasses(["green", "red", "purple", "blue"]);
-    running && (await qSort(arr, low, pi - 1, speed, pivot));
+    running && (await qSort(arr, low, pi - 1, pivot));
     removeClasses(["green", "red", "purple", "blue"]);
-    running && (await qSort(arr, pi + 1, high, speed, pivot));
+    running && (await qSort(arr, pi + 1, high, pivot));
   } else if (running) {
     elementSelect(arr[low]?.id)?.classList.add("yellow");
     elementSelect(arr[high]?.id)?.classList.add("yellow");
   }
 };
 
-const Quick_sort = async (arr, speed, setIsDisabled, pivot) => {
+const Quick_sort = async (arr, setIsDisabled, pivot) => {
   document.querySelector(".stop-btn").addEventListener("click", () => {
     running = false;
   });
-  await qSort(arr, 0, arr.length - 1, store.getState().speed, pivot);
-  running && (await delay(2 * store.getState().speed));
+  await qSort(arr, 0, arr.length - 1, pivot);
+  running && (await delay(2 * store.getState().sortingVisualizer.speed));
   running = true;
   setIsDisabled(false);
 };

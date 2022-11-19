@@ -1,6 +1,6 @@
 import SetInterval from "./SetInterval";
 var running = true;
-const insertion_sort = async (arr, speed, setIsDisabled) => {
+const insertion_sort = async (arr, setIsDisabled) => {
   return await new Promise((resolve, reject) => {
     document.querySelector(".stop-btn").addEventListener("click", () => {
       running = false;

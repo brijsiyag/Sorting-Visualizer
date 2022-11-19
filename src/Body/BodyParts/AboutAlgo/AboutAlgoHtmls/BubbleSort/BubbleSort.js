@@ -30,8 +30,8 @@ const BubbleSort = () => {
         already in order (8 &gt; 5), algorithm does not swap them.
         <br />
         <strong>Second Pass:</strong>&nbsp;
-        <br />( <strong>1</strong> <strong>4</strong> 2 5 8 ) –&gt; ({" "}
-        <strong>1</strong> <strong>4</strong> 2 5 8 )&nbsp;
+        <br />( <strong>1 4</strong> 2 5 8 ) –&gt; ( <strong>1</strong>{" "}
+        <strong>4</strong> 2 5 8 )&nbsp;
         <br />( 1 <strong>4</strong> <strong>2</strong> 5 8 ) –&gt; ( 1{" "}
         <strong>2</strong> <strong>4</strong> 5 8 ), Swap since 4 &gt; 2&nbsp;
         <br />( 1 2 <strong>4</strong> <strong>5</strong> 8 ) –&gt; ( 1 2{" "}

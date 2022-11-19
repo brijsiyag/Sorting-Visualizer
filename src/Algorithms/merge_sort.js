@@ -10,14 +10,14 @@ const removeClasses = (classNames) => {
 };
 
 const delay = async (time) => {
-  return await new Promise((resolve, reject) => {
+  return await new Promise((resolve) => {
     setTimeout(() => {
       resolve(true);
     }, time);
   });
 };
 
-async function merge(arr, l, m, r, speed) {
+async function merge(arr, l, m, r) {
   //Remove green form all
   document.querySelectorAll(".green").forEach((element) => {
     element.classList.remove("green");
@@ -86,8 +86,8 @@ async function merge(arr, l, m, r, speed) {
   });
 }
 
-const merge_sort = async (arr, speed, setIsDisabled) => {
-  return new Promise(async (resolve, reject) => {
+const merge_sort = async (arr, setIsDisabled) => {
+  return new Promise(async (resolve) => {
     document.querySelector(".stop-btn").addEventListener("click", () => {
       running = false;
     });
@@ -104,13 +104,7 @@ const merge_sort = async (arr, speed, setIsDisabled) => {
     await mergeSort(0, arr.length - 1);
     for (let i = 0; i < recArr.length; i++) {
       const element = recArr[i];
-      await merge(
-        arr,
-        element[0],
-        element[1],
-        element[2],
-        store.getState().speed
-      );
+      await merge(arr, element[0], element[1], element[2]);
       if (!running) {
         resolve(true);
         removeClasses(["green", "red", "purple", "blue"]);

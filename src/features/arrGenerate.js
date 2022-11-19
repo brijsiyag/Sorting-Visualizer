@@ -8,10 +8,9 @@ const arrGenerate = (size) => {
     let element = document.querySelector(`#id${i + 1}`);
     if (element) {
       element.style.transform = `translate(${(600 / size + 5) * i}px, ${0}px)`;
-      element.classList.remove("green");
-      element.classList.remove("yellow");
-      element.classList.remove("red");
-      element.classList.remove("blue");
+      ["green", "yellow", "red", "blue"].forEach((elet) => {
+        element.classList.remove(elet);
+      });
     }
   }
   return tempArr;

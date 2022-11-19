@@ -31,7 +31,7 @@ const options = [
 
 export default function SplitButton() {
   const dispatch = useDispatch();
-  const { arr, speed, isDisabled, pivot, algo } = useSelector((state) => {
+  const { arr, isDisabled, pivot, algo } = useSelector((state) => {
     return state.sortingVisualizer;
   });
   const [open, setOpen] = React.useState(false);
@@ -41,11 +41,11 @@ export default function SplitButton() {
   };
   const handleClick = async () => {
     setDisabled(true);
-    algo === 0 && (await Insertion_sort([...arr], speed, setDisabled));
-    algo === 1 && (await Bubble_sort([...arr], speed, setDisabled));
-    algo === 2 && (await Selection_sort([...arr], speed, setDisabled));
-    algo === 3 && (await Merge_sort([...arr], speed, setDisabled));
-    algo === 4 && (await Quick_sort([...arr], speed, setDisabled, pivot));
+    algo === 0 && (await Insertion_sort([...arr], setDisabled));
+    algo === 1 && (await Bubble_sort([...arr], setDisabled));
+    algo === 2 && (await Selection_sort([...arr], setDisabled));
+    algo === 3 && (await Merge_sort([...arr], setDisabled));
+    algo === 4 && (await Quick_sort([...arr], setDisabled, pivot));
     let tempArr = [];
     arr.forEach((element) => {
       tempArr.push(element.value);
