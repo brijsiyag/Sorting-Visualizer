@@ -5,7 +5,7 @@ FROM node:16.13.1-alpine3.14
 WORKDIR /app
 
 # Copy package.json and package-lock.json to avoid reinstalling packages
-COPY package*.json .
+COPY package*.json ./
 
 # Install packages
 RUN npm install
